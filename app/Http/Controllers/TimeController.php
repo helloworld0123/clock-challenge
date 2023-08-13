@@ -16,7 +16,7 @@ class TimeController extends Controller
      */
     public function update(Request $request)
     {
-
+        // Save the user's time offset to the database
         $request->user()->hourOffset = $request->hourOffset;
         $request->user()->minuteOffset = $request->minuteOffset;
         $request->user()->save();
