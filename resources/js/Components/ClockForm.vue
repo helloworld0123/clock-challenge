@@ -3,19 +3,27 @@ import InputLabel from "@/Components/InputLabel.vue";
 import { useForm } from "@inertiajs/vue3";
 import dayjs from "dayjs";
 import { ref } from "vue";
+
+// Define the cancel event
 const emit = defineEmits(["cancel"]);
+
+// Define props: timeToUpdate is the current time the Set time was clicked
 const props = defineProps({
     timeToUpdate: Object,
 });
 
+// Define reactive variables
+// hour and minute are the values from the current time
 const hour = ref(dayjs(props.timeToUpdate).format("HH"));
 const minute = ref(dayjs(props.timeToUpdate).format("mm"));
 
+// Define the form that will be submitted to the api using useForm from Inertia
 const form = useForm({
     hourOffset: 0,
     minuteOffset: 0,
 });
 
+// Define the hours and minutes arrays to be used for the select fields. Padding it with 0 ex: 00, 01, 02, etc.
 const hours = Array.from(Array(24).keys()).map((hour) =>
     hour.toString().padStart(2, "0")
 );
@@ -24,6 +32,8 @@ const minutes = Array.from(Array(60).keys()).map((hour) =>
     hour.toString().padStart(2, "0")
 );
 
+// Submit the form to the api
+// The hourOffset and minuteOffset are calculated by subtracting the current time from the time selected in the form
 function submit() {
     form.transform((data) => ({
         hourOffset: dayjs().hour(hour.value).diff(dayjs(), "hour"),

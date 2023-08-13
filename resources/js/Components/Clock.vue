@@ -3,24 +3,28 @@ import { computed, ref } from "vue";
 import dayjs from "dayjs";
 import { usePage } from "@inertiajs/vue3";
 
+// Define the edit event, this will be emited when the Set time button is clicked
 const emit = defineEmits(["edit"]);
 
+// Define the user computed property from the usePage Inertia helper
 const user = computed(() => {
     return usePage().props.auth.user;
 });
 
+// Define the current time by adding the offset from the users previously saved time or 0 for the default value
 const currentTime = ref(
     dayjs()
         .add(user.value.hourOffset, "hour")
         .add(user.value.minuteOffset, "minute")
 );
 
+// Update the current time every second while adding the offset, to make sure it shows the time set by the user
 function updateCurrentTime() {
     currentTime.value = dayjs()
         .add(user.value.hourOffset, "hour")
         .add(user.value.minuteOffset, "minute");
 }
-
+// Update the current time every second
 setInterval(updateCurrentTime, 1000);
 </script>
 
