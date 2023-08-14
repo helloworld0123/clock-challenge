@@ -29,6 +29,10 @@ Start sail
 
     ./vendor/bin/sail up
 
+Install frontend dependencies
+
+    ./vendor/bin/sail npm install
+
 
 Start dev for vue
 
